@@ -1,0 +1,48 @@
+To find something in my program it takes O(log n) time.  I was thinking of
+using the sortedWord in my BinaryNode as a key to a hash table.  We would
+then have unique keys for each word, and then finding something would be O(1).
+But the problem is that when we need to suggest a word for an incorrect 
+spelling we would be screwed.  So I just went with a Binary Tree, but in my
+algorithm I do use find a few times, so having that hash table probably
+would have made my algorithm a little bit faster but not that much.
+
+The dictionary that I used was 3esl.txt  This was provided by Alan Beale.
+You can access the filie at wordlist.sourceforge.net/12dicts-readme-r5.html.
+
+The time complexity of the suggest() code is as follows.
+It will try to find the word first, which will take O(log n) time, where
+n is the amount of words in the dictionary.  It should be O(log n) because I
+should have a balanced binary tree.
+Then I will find all the combinations of double characters and vowels, and
+search the tree.  If there are x are the number of double characters in the 
+word and y is the number of vowels in the word then there will be 2^x(5^y) 
+combination of words, and each one.
+Lastly if we dind't find our word in all the combinations then we are just
+goign to travers the tree and go to our great grandparent and find all the
+sibilings and try to find our word.  So it will take log n time to traverse
+the tree, and then there are 14 nodes if we have the greatgrandparent that
+we need to check.  So then it would be log n + 14 which is just O(log n).
+
+
+After I implemented my Binary Tree, I went on google searching for how to do
+a spellchecker.  It turns out that a Ternary Tree is the best way to do it.
+And it will receive a way better running time than my "algorithm," if you
+can call it that.  From what I read the running time of your neighbor search is pretty much O(log n), so when you misspell a word you are finding the correct
+one really fast.
+
+
+
+
+Problems with the code:
+1) When I enter in a word to spellcheck, if the length of the word is 8 or 
+greater, my program will crash.  I have no clue why.  I have commented where 
+I think it happens, but I don't see why it is happening.  What is weird is 
+that when I run it in GDB it works perfectly fine.  I can enter any length
+of word, and it will return a correctly spelled word.
+
+Also there is a problem with piping from the second program to the
+spellchecker.  I did a test run where, my second program would just print out 
+a few words.  Basically it was five cout statements, and it would work when 
+I did Generate | spellcheckerBinary.  But then after, I added reading in from 
+file and generating problem words, it would no longer pipe correctly.  It does 
+either a few words and crahes, or sometimes it does no words and crashes.
